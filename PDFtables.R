@@ -16,5 +16,7 @@ table7 <- raw_tables[7] %>%
   map(as_data_frame) %>%
   bind_rows() %>%
   mutate(V18 = NULL)
+colnames(table7) <- as.character(table7[1,])
+table7 <- table7[-1,]
 # Requires combining raw_tables[7,8,9]
 
