@@ -1,0 +1,20 @@
+# Converts PDF tables to a usable format
+
+#Libraries
+library('tidyverse')
+library('tabulizer')
+
+#Load PDF to extract tables from
+download.file("https://github.com/jacksonmluckey/OhioOpioid/raw/master/2017_OhioDrugOverdoseReport.pdf",
+              "OhioOpioid2017PDF")
+
+# Load all tables from PDF
+raw_tables <- extract_tables("OhioOpioid2017PDF")
+
+# Extracting "Table 3. Number of Unintentional Drug Overdose Deaths and Average Crude and Age-Adjusted Annual Death Rates Per 100,000 Population, by County, 2005-2017"
+table7 <- raw_tables[7] %>%
+  map(as_data_frame) %>%
+  bind_rows() %>%
+  mutate(V18 = NULL)
+# Requires combining raw_tables[7,8,9]
+
