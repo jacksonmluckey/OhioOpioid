@@ -31,4 +31,4 @@ table7 <- table7 %>%
   rename("AgeAdjustedRate" = "AARtoMerge") %>%
   rename("CrudeRate" = "Crude Rate") %>%
   unite("Total2012to2017", "2012-2017 Total", "TotalToMerge", sep = "") %>%
-  rename_at(vars(starts_with("2")), funs(str_replace(., "2", "Year2")))
+  rename_if(vars(starts_with("2")), str_replace(., "2", "Year2"))
