@@ -25,10 +25,10 @@ table7[1,19] <- "AARtoMerge"
 colnames(table7) <- as.character(table7[1,])
 table7 <- table7[-1,]
 
-# Drop unnecessary columns and combine the split ones
+# Drop unnecessary columns, combine the split ones, and rename year columns
 table7 <- table7 %>%
   mutate("Age Adjusted Rate" = NULL) %>%
   rename("AgeAdjustedRate" = "AARtoMerge") %>%
   rename("CrudeRate" = "Crude Rate") %>%
-  unite("Total2012to2017", "2012-2017 Total", "TotalToMerge", sep = "")
-
+  unite("Total2012to2017", "2012-2017 Total", "TotalToMerge", sep = "") %>%
+  rename_at(vars(starts_with("2")), funs(str_replace(., "2", "Year2")))
