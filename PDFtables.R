@@ -29,5 +29,6 @@ table7 <- table7[-1,]
 table7 <- table7 %>%
   mutate("Age Adjusted Rate" = NULL) %>%
   rename("AgeAdjustedRate" = "AARtoMerge") %>%
-  rename("CrudeRate" = "Crude Rate")
+  rename("CrudeRate" = "Crude Rate") %>%
+  unite("Total2012to2017", "2012-2017 Total", "TotalToMerge", sep = "")
 
