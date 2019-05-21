@@ -21,7 +21,7 @@ table7 <- raw_tables[7] %>%
 colnames(table7) <- as.character(table7[1,])
 table7 <- table7[-1,]
 
-# Drop unnecessary columns (for now because I kept on fucking it up otherwise)
+# Drop unnecessary columns (for now because I kept on messing it up otherwise)
 
 # Requires combining raw_tables[7,8,9]
 
