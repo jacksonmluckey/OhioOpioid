@@ -17,11 +17,17 @@ table7 <- raw_tables[7] %>%
   bind_rows() %>%
   mutate(V18 = NULL)
 
+# Hacky solution to the uncallable blank column names problem
+table7[1,16] <- "TotalToMerge"
+table7[1,19] <- "AARtoMerge"
+
 # Change first row into column names
 colnames(table7) <- as.character(table7[1,])
 table7 <- table7[-1,]
 
-# Drop unnecessary columns (for now because I kept on messing it up otherwise)
-
-# Requires combining raw_tables[7,8,9]
+# Drop unnecessary columns and combine the split ones
+table7 <- table7 %>%
+  mutate("Age Adjusted Rate" = NULL) %>%
+  rename("AgeAdjustedRate" = "AARtoMerge") %>%
+  rename("CrudeRate" = "Crude Rate")
 
