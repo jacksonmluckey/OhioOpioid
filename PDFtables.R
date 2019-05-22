@@ -35,4 +35,7 @@ unintentional_overdose_county_year <- function(table) {
     rename_at(vars(starts_with("2")), list( ~str_replace(., "2", "Year2")))
 }
 
+# Generate tables for the 3 pages that make up the unintentional overdose data
 table1 <- unintentional_overdose_county_year(raw_tables[7])
+table2 <- unintentional_overdose_county_year(raw_tables[8])
+table3 <- unintentional_overdose_county_year(raw_tables[9])
