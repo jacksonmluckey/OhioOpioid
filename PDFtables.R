@@ -18,15 +18,15 @@ unintentional_overdose_county_year <- function(table) {
     bind_rows() %>%
     mutate(V18 = NULL)
   
-  # Hacky solution to the uncallable blank column names problem
+  # Hacky solution to the uncallable blank variable names problem
   table[1,16] <- "TotalToMerge"
   table[1,19] <- "AARtoMerge"
   
-  # Change first row into column names
+  # Change first row into variable names
   colnames(table) <- as.character(table[1,])
   table <- table[-1,]
   
-  # Drop unnecessary columns, combine the split ones, and rename year columns
+  # Drop unnecessary variables, combine the split ones, and rename year columns
   table <- table %>%
     mutate("Age Adjusted Rate" = NULL) %>%
     rename("AgeAdjustedRate" = "AARtoMerge") %>%
@@ -44,3 +44,7 @@ table3 <- unintentional_overdose_county_year(raw_tables[9])
 table <- table1 %>%
   full_join(table2) %>%
   full_join(table3)
+
+# Change variables to correct type
+table <- table %>%
+  mutate_at(vars(starts_with("Year")), as.integer)
