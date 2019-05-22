@@ -47,4 +47,9 @@ table <- table1 %>%
 
 # Change variables to correct type
 table <- table %>%
-  mutate_at(vars(starts_with("Year")), as.integer)
+  mutate_at(vars(starts_with("Year")), as.integer) %>%
+  mutate(
+    Total2012to2017 = as.integer(gsub(",", "", Total2012to2017)),
+    CrudeRate = as.numeric(na_if(CrudeRate, "*")),
+    AgeAdjustedRate = as.numeric(na_if(AgeAdjustedRate, "*"))
+  )
