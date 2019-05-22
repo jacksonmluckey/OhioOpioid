@@ -39,3 +39,8 @@ unintentional_overdose_county_year <- function(table) {
 table1 <- unintentional_overdose_county_year(raw_tables[7])
 table2 <- unintentional_overdose_county_year(raw_tables[8])
 table3 <- unintentional_overdose_county_year(raw_tables[9])
+
+# COmbine the tables
+table <- table1 %>%
+  full_join(table2) %>%
+  full_join(table3)
