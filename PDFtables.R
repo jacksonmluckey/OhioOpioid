@@ -45,11 +45,12 @@ table <- table1 %>%
   full_join(table2) %>%
   full_join(table3)
 
-# Change variables to correct type
+# Change variables to correct type and resolve *s
 table <- table %>%
-  mutate_at(vars(starts_with("Year")), as.integer) %>%
+  mutate_at(vars(starts_with("Year")), list( ~as.integer(gsub(",", "", ., fixed = TRUE)))) %>% # turns 2007 into Year2007 and so on while also resolving the instances where a "," in the value would NA instead of switching to int
   mutate(
-    Total2012to2017 = as.integer(gsub(",", "", Total2012to2017)),
-    CrudeRate = as.numeric(na_if(CrudeRate, "*")),
-    AgeAdjustedRate = as.numeric(na_if(AgeAdjustedRate, "*"))
+    Total2012to2017 = as.integer(gsub(",", "", Total2012to2017, fixed = TRUE)),
+    CrudeRate = as.numeric(na_if(CrudeRate, "*")), # removes the * from counties without enough data for all stats
+    AgeAdjustedRate = as.numeric(na_if(AgeAdjustedRate, "*")), # same as above
+    County = gsub("*", "", County, fixed = TRUE) # same as above but for county names
   )
