@@ -3,13 +3,10 @@
 #Libraries
 library('tidyverse')
 library('tabulizer')
-
-#Load PDF to extract tables from
-#download.file("https://github.com/jacksonmluckey/OhioOpioid/raw/master/2017_OhioDrugOverdoseReport.pdf",
-#              "OhioOpioid2017PDF")
+library('readxl')
 
 # Load all tables from PDF
-raw_tables <- extract_tables("2017_OhioDrugOverdoseReport.pdf")
+raw_tables <- extract_tables("Inputs/PDFs/2017_OhioDrugOverdoseReport.pdf")
 
 unintentional_overdose_county_year <- function(table) {
   # Extracting "Table 3. Number of Unintentional Drug Overdose Deaths and Average Crude and Age-Adjusted Annual Death Rates Per 100,000 Population, by County, 2005-2017"
@@ -54,3 +51,12 @@ table <- table %>%
     AgeAdjustedRate = as.numeric(na_if(AgeAdjustedRate, "*")), # same as above
     County = gsub("*", "", County, fixed = TRUE) # same as above but for county names
   )
+
+# Load employment data
+employment <- read_excel("Inputs/Data/Unemployment.xls")
+
+# Change relevant row into variable names and remove "formatting" rows
+colnames(employment) <- as.character(employment[7,])
+employment <- employment[-1,]
+employment <- employment %>%
+  drop_na()
