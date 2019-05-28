@@ -23,7 +23,8 @@ employment_year <- function(df, year) { #using year will necessitate metaprogram
   df %>%
     select(ends_with(year), Area_name) %>%
     rename(County = Area_name) %>%
-    rename_all(list(~ str_replace(., pattern, "")))
+    rename_all(list(~ str_replace(., pattern, ""))) %>%
+    mutate(County = str_trim(County))
 }
 
 # Generate an employment dataframe for each year
