@@ -18,7 +18,10 @@ load(file = here("Rdata", "OverdoseDeaths.rda"))
 load(file = here("RData", "Employment.rda"))
 overdose_employment_2017 <- left_join(table, employment_2017, by = "County")
 overdose_employment_2017 %>% ggplot(aes(x = Unemployment_rate, y = AgeAdjustedRate, colour = Median_Household_Income)) +
-  geom_point()
+  geom_point() +
+  scale_x_log10() +
+  scale_y_log10() +
+  geom_smooth(method = "lm")
 ```
 
 ## Including Plots
