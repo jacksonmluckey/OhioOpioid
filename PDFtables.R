@@ -60,3 +60,15 @@ colnames(employment) <- as.character(employment[7,])
 employment <- employment[-1,]
 employment <- employment %>%
   drop_na()
+employment <- employment %>%
+  filter(State == "OH") %>%
+  mutate(Area_name = gsub("County, OH", "", Area_name)) # Removes things that would prevent a proper join
+
+# Function for selecting a particular year's employment data and renaming it to enable joins
+employment_year <- function(df, year) { #using year will necessitate metaprograming
+  df %>%
+    select(ends_with(year), Area_name) %>%
+    rename(County = Area_name)
+}
+
+test <- employment_year(employment, "2013")
