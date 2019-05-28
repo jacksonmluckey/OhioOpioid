@@ -1,0 +1,23 @@
+---
+title: "Ohio Opioid Visualizations"
+author: "Jackson Luckey"
+date: "5/28/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Unemployment Rate and Overdose Deaths
+
+```{r cars}
+load(file = "./RData/OverdoseDeaths.rda")
+load(file = "./Rdata/Employment.rda")
+```
+
+## Including Plots
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```

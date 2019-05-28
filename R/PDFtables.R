@@ -37,10 +37,13 @@ table1 <- unintentional_overdose_county_year(raw_tables[7])
 table2 <- unintentional_overdose_county_year(raw_tables[8])
 table3 <- unintentional_overdose_county_year(raw_tables[9])
 
-# COmbine the tables
+# Combine the tables
 table <- table1 %>%
   full_join(table2) %>%
   full_join(table3)
+
+# Remove the now unnecessary tables from workspace
+rm(table1, table2, table3)
 
 # Change variables to correct type and resolve *s
 table <- table %>%
@@ -51,3 +54,6 @@ table <- table %>%
     AgeAdjustedRate = as.numeric(na_if(AgeAdjustedRate, "*")), # same as above
     County = gsub("*", "", County, fixed = TRUE) # same as above but for county names
   )
+
+# Save the table
+save(table, file = "./RData/OverdoseDeaths.rda")

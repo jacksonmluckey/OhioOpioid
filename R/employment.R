@@ -29,3 +29,6 @@ employment_year <- function(df, year) { #using year will necessitate metaprogram
 for (i in 2007:2017) {
   assign(paste0("employment_", i), employment_year(employment, i))
 }
+
+# Save dataframes
+save(list = ls(pattern = "employment"), file = "./RData/Employment.rda")
