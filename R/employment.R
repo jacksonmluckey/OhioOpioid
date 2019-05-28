@@ -1,3 +1,7 @@
+#Libraries
+library('tidyverse')
+library('readxl')
+
 # Load employment data
 employment <- read_excel("./Inputs/Excel/Unemployment.xls")
 
