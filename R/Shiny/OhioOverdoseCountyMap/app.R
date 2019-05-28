@@ -43,6 +43,7 @@ server <- function(input, output, session) {
     output$OhioCountyOverdoseMap <- renderLeaflet({
         map <- leaflet() %>%
             addTiles() %>%
+            addPolygons(data = OhioCounties) %>%
             setView(lng = -80, lat = 41, zoom = 8)
     })
     
