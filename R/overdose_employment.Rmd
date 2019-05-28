@@ -7,13 +7,15 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("here")
 ```
 
 ## Unemployment Rate and Overdose Deaths
 
-```{r cars}
-load(file = "./RData/OverdoseDeaths.rda")
-load(file = "./Rdata/Employment.rda")
+```{r}
+load(file = here("Rdata", "OverdoseDeaths.rda"))
+load(file = here("RData", "Employment.rda"))
 ```
 
 ## Including Plots
