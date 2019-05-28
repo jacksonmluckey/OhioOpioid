@@ -15,11 +15,16 @@ employment <- employment %>%
   filter(State == "OH") %>%
   mutate(Area_name = gsub("County, OH", "", Area_name)) # Removes things that would prevent a proper join
 
+# Change variables into correct format
+employment <- employment %>%
+  mutate_at(vars(matches("20")), as.numeric) %>%
+  mutate_at(vars(matches("_code")), as.factor) %>%
+  mutate_at(vars(matches("Metro")), as.factor)
+
 # Function for selecting a particular year's employment data and renaming it to enable joins
 employment_year <- function(df, year) { #using year will necessitate metaprograming
   year = as.character(year)
   pattern = paste0("_", year)
-  print(pattern)
   df %>%
     select(ends_with(year), Area_name) %>%
     rename(County = Area_name) %>%
