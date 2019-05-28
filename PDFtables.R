@@ -66,6 +66,7 @@ employment <- employment %>%
 
 # Function for selecting a particular year's employment data and renaming it to enable joins
 employment_year <- function(df, year) { #using year will necessitate metaprograming
+  year = as.character(year)
   pattern = paste0("_", year)
   print(pattern)
   df %>%
@@ -74,4 +75,6 @@ employment_year <- function(df, year) { #using year will necessitate metaprogram
     rename_all(list(~ str_replace(., pattern, "")))
 }
 
-test <- employment_year(employment, "2013")
+for (i in 2007:2017) {
+  assign(paste0("employment_", i), employment_year(employment, i))
+}
