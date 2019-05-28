@@ -7,8 +7,9 @@
 #    http://shiny.rstudio.com/
 #
 
-library(shiny)
-library(leaflet)
+library("shiny")
+library("leaflet")
+library("tidyverse")
 
 # Define UI for application that draws a map of overdose deaths in Ohio by county
 ui <- fluidPage(
@@ -33,17 +34,18 @@ ui <- fluidPage(
     )
 )
 
+# Load data needed for map
+OhioCounties <- raster::getData("GADM", country = "usa", level = 2)
+
 # Define server logic required to draw a histogram
-server <- function(input, output) {
+server <- function(input, output, session) {
 
-    output$distPlot <- renderPlot({
-        # generate bins based on input$bins from ui.R
-        x    <- faithful[, 2]
-        bins <- seq(min(x), max(x), length.out = input$bins + 1)
-
-        # draw the histogram with the specified number of bins
-        hist(x, breaks = bins, col = 'darkgray', border = 'white')
+    output$OhioCountyOverdoseMap <- renderLeaflet({
+        map <- leaflet() %>%
+            addTiles() %>%
+            setView(lng = -80, lat = 41, zoom = 8)
     })
+    
 }
 
 # Run the application 
