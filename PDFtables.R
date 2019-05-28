@@ -66,9 +66,12 @@ employment <- employment %>%
 
 # Function for selecting a particular year's employment data and renaming it to enable joins
 employment_year <- function(df, year) { #using year will necessitate metaprograming
+  pattern = paste0("_", year)
+  print(pattern)
   df %>%
     select(ends_with(year), Area_name) %>%
-    rename(County = Area_name)
+    rename(County = Area_name) %>%
+    rename_all(list(~ str_replace(., pattern, "")))
 }
 
 test <- employment_year(employment, "2013")
