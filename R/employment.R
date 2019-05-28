@@ -1,9 +1,10 @@
 #Libraries
 library('tidyverse')
 library('readxl')
+library('here')
 
 # Load employment data
-employment <- read_excel("./Inputs/Excel/Unemployment.xls")
+employment <- read_excel(here("Inputs", "Excel", "Unemployment.xls"))
 
 # Change relevant row into variable names and remove "formatting" rows
 colnames(employment) <- as.character(employment[7,])
@@ -31,4 +32,4 @@ for (i in 2007:2017) {
 }
 
 # Save dataframes
-save(list = ls(pattern = "employment"), file = "./RData/Employment.rda")
+save(list = ls(pattern = "employment"), file = here("RData", "Employment.rda"))

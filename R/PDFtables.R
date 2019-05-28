@@ -4,9 +4,10 @@
 library('tidyverse')
 library('tabulizer')
 library('readxl')
+library('here')
 
 # Load all tables from PDF
-raw_tables <- extract_tables("./Inputs/PDFs/2017_OhioDrugOverdoseReport.pdf")
+raw_tables <- extract_tables(here("Inputs", "PDFs", "2017_OhioDrugOverdoseReport.pdf"))
 
 unintentional_overdose_county_year <- function(table) {
   # Extracting "Table 3. Number of Unintentional Drug Overdose Deaths and Average Crude and Age-Adjusted Annual Death Rates Per 100,000 Population, by County, 2005-2017"
@@ -56,4 +57,4 @@ table <- table %>%
   )
 
 # Save the table
-save(table, file = "./RData/OverdoseDeaths.rda")
+save(table, file = here("RData", "OverdoseDeaths.rda"))
