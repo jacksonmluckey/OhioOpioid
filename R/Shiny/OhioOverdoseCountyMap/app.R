@@ -9,6 +9,8 @@
 
 library("shiny")
 library("leaflet")
+library("rgdal")
+library("here")
 library("tidyverse")
 
 # Define UI for application that draws a map of overdose deaths in Ohio by county
@@ -35,7 +37,13 @@ ui <- fluidPage(
 )
 
 # Load data needed for map
-OhioCounties <- raster::getData("GADM", country = "usa", level = 2)
+OhioCounties <- readOGR(here("Inputs", "Shapefiles", "ODOT_County_Boundaries.shp"))
+print(OhioCounties)
+#table <- table %>% mutate(State = "Ohio")
+#tmp <- merge(OhioCounties, table,
+#             by.x = c("NAME_1", "NAME_2"), by.y = c("State", "County")
+             )
+print(OhioCounties)
 
 # Define server logic required to draw a histogram
 server <- function(input, output, session) {
@@ -43,7 +51,7 @@ server <- function(input, output, session) {
     output$OhioCountyOverdoseMap <- renderLeaflet({
         map <- leaflet() %>%
             addTiles() %>%
-            addPolygons(data = OhioCounties) %>%
+            #addPolygons(data = OhioCounties) %>%
             setView(lng = -80, lat = 41, zoom = 8)
     })
     
