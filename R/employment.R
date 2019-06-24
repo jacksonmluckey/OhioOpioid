@@ -33,8 +33,10 @@ employment_year <- function(df, year) { #using year will necessitate metaprogram
 }
 
 # Generate an employment dataframe for each year
+employment_container = list()
 for (i in 2007:2017) {
-  assign(paste0("employment_", i), employment_year(employment, i))
+  employment_container[[(i - 2006)]] = list(i, employment_year(employment, i))
+  #assign(paste0("employment_", i), employment_year(employment, i))
 }
 
 # Save dataframes

@@ -45,6 +45,7 @@ table <- table1 %>%
 
 # Remove the now unnecessary tables from workspace
 rm(table1, table2, table3)
+rm(raw_tables)
 
 # Change variables to correct type and resolve *s
 table <- table %>%
@@ -55,6 +56,10 @@ table <- table %>%
     AgeAdjustedRate = as.numeric(na_if(AgeAdjustedRate, "*")), # same as above
     County = gsub("*", "", County, fixed = TRUE) # same as above but for county names
   )
+
+# Save under a less bad name
+overdose_deaths_rates_wide <- table
+rm(table)
 
 # Save the table
 save(table, file = here("RData", "OverdoseDeaths.rda"))
