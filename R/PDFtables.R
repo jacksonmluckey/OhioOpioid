@@ -61,12 +61,16 @@ table <- table %>%
 overdose_deaths_wide <- table
 rm(table)
 
-# Save the table in rda and csv format
-save(overdose_deaths_wide, file = here("RData", "OverdoseDeathsWide.rda"))
-write_csv(overdose_deaths_wide, file = here("Data", "CSV", "OverdoseDeathsWide.csv"))
+# Save the overdose_deaths_wide in rda and csv format
+save(overdose_deaths_wide, file = here("Data", "RData", "OverdoseDeathsWide.rda"))
+write_csv(overdose_deaths_wide, path = here("Data", "CSV", "OverdoseDeathsWide.csv"))
 
 # Create a tall version of overdose_death_rates_wide
 overdose_deaths_tall <- overdose_deaths_wide %>%
   select(-c(Total2012to2017, CrudeRate,AgeAdjustedRate)) %>%
   gather(year, deaths, Year2005:Year2017) %>%
   mutate(year = stringr::str_match(year, "([0-9]{4})")[2])
+
+# Save overdose_deaths_tall in rda and csv format
+save(overdose_deaths_tall, file = here("Data", "RData", "OverdoseDeathsWide.rda"))
+write_csv(overdose_deaths_tall, path = here("Data", "CSV", "OverdoseDeathsWide.csv"))
