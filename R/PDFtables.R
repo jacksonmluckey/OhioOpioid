@@ -69,4 +69,4 @@ write_csv(overdose_deaths_wide, file = here("Data", "CSV", "OverdoseDeathsWide.c
 overdose_deaths_tall <- overdose_deaths_wide %>%
   select(-c(Total2012to2017, CrudeRate,AgeAdjustedRate)) %>%
   gather(year, deaths, Year2005:Year2017) %>%
-  mutate(year = stringr::str_match(year, "Year([0-9]{4})")[2])
+  mutate(year = stringr::str_match(year, "([0-9]{4})")[2])
