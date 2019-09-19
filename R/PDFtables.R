@@ -58,8 +58,15 @@ table <- table %>%
   )
 
 # Save under a less bad name
-overdose_deaths_rates_wide <- table
+overdose_deaths_wide <- table
 rm(table)
 
-# Save the table
-save(table, file = here("RData", "OverdoseDeaths.rda"))
+# Save the table in rda and csv format
+save(overdose_deaths_wide, file = here("RData", "OverdoseDeathsWide.rda"))
+write_csv(overdose_deaths_wide, file = here("Data", "CSV", "OverdoseDeathsWide.csv"))
+
+# Create a tall version of overdose_death_rates_wide
+overdose_deaths_tall <- overdose_deaths_wide %>%
+  select(-c(Total2012to2017, CrudeRate,AgeAdjustedRate)) %>%
+  gather(year, deaths, Year2005:Year2017) %>%
+  mutate(year = stringr::str_match(year, "Year([0-9]{4})"))
