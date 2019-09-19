@@ -72,5 +72,5 @@ overdose_deaths_tall <- overdose_deaths_wide %>%
   mutate(year = stringr::str_match(year, "([0-9]{4})")[2])
 
 # Save overdose_deaths_tall in rda and csv format
-save(overdose_deaths_tall, file = here("Data", "RData", "OverdoseDeathsWide.rda"))
-write_csv(overdose_deaths_tall, path = here("Data", "CSV", "OverdoseDeathsWide.csv"))
+save(overdose_deaths_tall, file = here("Data", "RData", "OverdoseDeathsTall.rda"))
+write_csv(overdose_deaths_tall, path = here("Data", "CSV", "OverdoseDeathsTall.csv"))
