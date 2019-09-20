@@ -7,7 +7,7 @@ library('readxl')
 library('here')
 
 # Load all tables from PDF
-raw_tables <- extract_tables(here("Inputs", "PDFs", "2017_OhioDrugOverdoseReport.pdf"))
+raw_tables <- extract_tables(here("Data", "PDFs", "2017_OhioDrugOverdoseReport.pdf"))
 
 unintentional_overdose_county_year <- function(table) {
   # Extracting "Table 3. Number of Unintentional Drug Overdose Deaths and Average Crude and Age-Adjusted Annual Death Rates Per 100,000 Population, by County, 2005-2017"
@@ -58,19 +58,17 @@ table <- table %>%
   )
 
 # Save under a less bad name
-overdose_deaths_wide <- table
+OverdoseDeathsWide <- table
 rm(table)
 
-# Save the overdose_deaths_wide in rda and csv format
-save(overdose_deaths_wide, file = here("Data", "RData", "OverdoseDeathsWide.rda"))
-write_csv(overdose_deaths_wide, path = here("Data", "CSV", "OverdoseDeathsWide.csv"))
+# Save the overdose_deaths_wide in CSV format
+write_csv(OverdoseDeathsWide, path = here("Data", "CSV", "OverdoseDeathsWide.csv"))
 
-# Create a tall version of overdose_death_rates_wide
-overdose_deaths_tall <- overdose_deaths_wide %>%
+# Create a tall version of OverdoseDeathsWide
+OverdoseDeathsTall <- OverdoseDeathsWide %>%
   select(-c(Total2012to2017, CrudeRate,AgeAdjustedRate)) %>%
   gather(year, deaths, Year2005:Year2017) %>%
-  mutate(year = stringr::str_match(year, "([0-9]{4})")[2])
+  mutate(year = parse_number(year))
 
-# Save overdose_deaths_tall in rda and csv format
-save(overdose_deaths_tall, file = here("Data", "RData", "OverdoseDeathsTall.rda"))
-write_csv(overdose_deaths_tall, path = here("Data", "CSV", "OverdoseDeathsTall.csv"))
+# Save overdose_deaths_tall in CSV format
+write_csv(OverdoseDeathsTall, path = here("Data", "CSV", "OverdoseDeathsTall.csv"))
