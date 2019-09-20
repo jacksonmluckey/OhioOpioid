@@ -1,0 +1,28 @@
+---
+title: "Transfer Receipts and Overdose Deaths"
+author: "jacksonmluckey@gmail.com"
+date: "9/20/2019"
+output: html_document
+---
+
+```{r setup}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Load the necessary packages
+library(tidyverse)
+library(here)
+
+# Load the necessary datasets and rename columns as needed to enable merging them
+OverdoseDeathsTall <- read_csv(here("Data", "CSV", "OverdoseDeathsTall.csv")) %>%
+  mutate(Year = year,
+         year = NULL) # Capitalize the Year column
+TransferReceiptsTall <- read_csv(here("Data", "CSV", "TransferReceiptsTall.csv")) %>%
+  mutate(County = Area,
+         Area = NULL) # Rename Area to County
+
+# Merge the two datasets
+df <- full_join(OverdoseDeathsTall, TransferReceiptsTall, by = c("Year", "County"))
+```
+
+# Transfer Receipts and Opioid Overdoses in Ohio
+
