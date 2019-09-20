@@ -30,3 +30,8 @@ TransferReceipts <- TransferReceipts %>%
 # Save wide version of TransferReceipts to CSV
 TransferReceiptsWide <- TransferReceipts
 write_csv(TransferReceiptsWide, here("Data", "CSV", "TransferReceiptsWide.csv"))
+
+# Create tall version of TransferReceipts
+TransferReceiptsTall <- TransferReceipts %>%
+  gather(key = "Year", value = "TotalTransferReceipts", -c("Area", "TotalIncome", "PercentTotalIncome", "DependencyRank")) %>%
+  mutate(Year = parse_number(Year)) # Removes "TotalTransferReceipts" from the Year column
