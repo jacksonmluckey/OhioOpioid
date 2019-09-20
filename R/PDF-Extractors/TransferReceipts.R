@@ -35,3 +35,6 @@ write_csv(TransferReceiptsWide, here("Data", "CSV", "TransferReceiptsWide.csv"))
 TransferReceiptsTall <- TransferReceipts %>%
   gather(key = "Year", value = "TotalTransferReceipts", -c("Area", "TotalIncome", "PercentTotalIncome", "DependencyRank")) %>%
   mutate(Year = parse_number(Year)) # Removes "TotalTransferReceipts" from the Year column
+
+# Save TransferReceiptsTall to csv
+write_csv(TransferReceiptsTall, here("Data", "CSV", "TransferReceiptsTall.csv"))
