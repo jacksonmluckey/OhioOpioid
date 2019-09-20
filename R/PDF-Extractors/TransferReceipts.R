@@ -17,3 +17,7 @@ TransferReceipts <- TransferReceipts %>%
 names(TransferReceipts) <- c("Area", "TotalTransferReceipts2012", "TotalTransferReceipts2013", "TotalTransferReceipts2014",
                              "TotalTransferReceipts2015", "TotalTransferReceipts2016", "TotalTransferReceipts2017",
                              "TotalIncome", "PercentTotalIncome", "DependencyRank")
+
+# Remove erroneous rows that come from the poor formatting of the pdf
+TransferReceipts <- TransferReceipts[5:nrow(TransferReceipts),] %>%
+  filter(! Area == "")
