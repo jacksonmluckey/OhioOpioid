@@ -14,10 +14,19 @@ TransferReceipts <- TransferReceipts %>%
   separate(X.3, c("TotalTransferReceipts2014", "TotalTransferReceipts2015"), sep = " ")
 
 # Rename the columns
-names(TransferReceipts) <- c("Area", "TotalTransferReceipts2012", "TotalTransferReceipts2013", "TotalTransferReceipts2014",
-                             "TotalTransferReceipts2015", "TotalTransferReceipts2016", "TotalTransferReceipts2017",
-                             "TotalIncome", "PercentTotalIncome", "DependencyRank")
+col_names <- c("Area", "TotalTransferReceipts2012", "TotalTransferReceipts2013", "TotalTransferReceipts2014",
+               "TotalTransferReceipts2015", "TotalTransferReceipts2016", "TotalTransferReceipts2017",
+               "TotalIncome", "PercentTotalIncome", "DependencyRank")
+names(TransferReceipts) <- col_names
 
 # Remove erroneous rows that come from the poor formatting of the pdf
 TransferReceipts <- TransferReceipts[5:nrow(TransferReceipts),] %>%
   filter(! Area == "")
+
+# Convert columns to numeric
+TransferReceipts <- TransferReceipts %>%
+  mutate_at(col_names[2:length(col_names)], parse_number)
+
+# Save wide version of TransferReceipts to CSV
+TransferReceiptsWide <- TransferReceipts
+write_csv(TransferReceiptsWide, here("Data", "CSV", "TransferReceiptsWide.csv"))
