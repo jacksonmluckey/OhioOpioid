@@ -22,6 +22,10 @@ TransferReceiptsTall <- read_csv(here("Data", "CSV", "TransferReceiptsTall.csv")
 
 # Merge the two datasets
 df <- full_join(OverdoseDeathsTall, TransferReceiptsTall, by = c("Year", "County"))
+
+# Filter years before 2012 (due to no Transfer Receipts data)
+df <- df %>%
+  filter(Year > 2011)
 ```
 
 # Transfer Receipts and Opioid Overdoses in Ohio
