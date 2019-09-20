@@ -19,14 +19,31 @@ OverdoseDeathsTall <- read_csv(here("Data", "CSV", "OverdoseDeathsTall.csv")) %>
 TransferReceiptsTall <- read_csv(here("Data", "CSV", "TransferReceiptsTall.csv")) %>%
   mutate(County = Area,
          Area = NULL) # Rename Area to County
+PopTall <- read_csv(here("Data", "CSV", "OhioCountyPopulationYearTall.csv")) %>%
+  filter(Year == 2010) %>% # use most recent year available in the data
+  mutate(Year = NULL) # remove year column to allow it to populate for all years
 
-# Merge the two datasets
-df <- full_join(OverdoseDeathsTall, TransferReceiptsTall, by = c("Year", "County"))
+# Merge the datasets
+df <- left_join(OverdoseDeathsTall, TransferReceiptsTall)
+df <- left_join(df, PopTall)
 
 # Filter years before 2012 (due to no Transfer Receipts data)
 df <- df %>%
   filter(Year > 2011)
+
+# Calculate overdose rate
+df <- df %>%
+  mutate(Rate = (deaths / Population) * 100000) # num dead per 100000 pop per year
 ```
 
 # Transfer Receipts and Opioid Overdoses in Ohio
 
+```{r}
+ggplot(df, aes(x = PercentTotalIncome, y = Rate, size = Population)) +
+  geom_point() +
+  theme_classic() +
+  labs(x = "Yearly Opioid Overdose Deaths per 100,000 People",
+       y = "Government Transfers as Percent of Total Income",
+       size = "County Population") +
+  ggtitle("The Relationship Between Government Transfers and Opioid Overdoses")
+```
