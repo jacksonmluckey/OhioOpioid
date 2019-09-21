@@ -42,15 +42,21 @@ df <- df %>%
 ggplot(df, aes(x = PercentTotalIncome, y = Rate, size = Population)) +
   geom_point() +
   theme_classic() +
-  labs(y = "Yearly Opioid Overdose Deaths per 100,000 People",
+  labs(y = "Annual Opioid Overdose Deaths per 100,000 People",
        x = "Government Transfers as Percent of Total Income",
        size = "County Population") +
   ggtitle("Government Transfers and Opioid Overdose Deaths")
 ```
 
-This graph does not appear to show anything meaninful
+A visual analysis of the graph does not reveal a meaningful relationship between the percent of total income from government transfers and the yearly opioid overdose death rate.
 
 ```{r}
 ggplot(df, aes(x = DependencyRank, y = Rate)) +
-  geom_jitter()
+  geom_jitter() +
+  theme_classic() +
+  labs(x = "Dependency Rank",
+       y = "Annual Opioid Overdoses per 100,000 People") +
+  ggtitle("Dependency Rank and Opioid Overdose Rate")
 ```
+
+There is no clear relationsip between dependency rank (I believe it's an ordered ranking of counties by percent of total income from government transfers) and the yearly opioid overdose death rate.
