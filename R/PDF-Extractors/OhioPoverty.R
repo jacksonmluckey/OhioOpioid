@@ -60,3 +60,8 @@ write_csv(PoorPersons, path = here("Data", "CSV", "PoorPersons.csv"))
 rm(PoorPersons)
 rm(PoorPersonsColNames)
 rm (TidyPoorPersonsColNames)
+
+
+##############################################################################################################################
+# Table A2: Number and Percent of Poor Families in Ohio and the U.S., 1959, 1969-2017 (in Thousands, Except for Percentages) #
+##############################################################################################################################
