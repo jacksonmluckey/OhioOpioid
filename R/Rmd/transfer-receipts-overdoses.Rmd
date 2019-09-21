@@ -39,11 +39,13 @@ df <- df %>%
 # Transfer Receipts and Opioid Overdoses in Ohio
 
 ```{r}
-ggplot(df, aes(x = PercentTotalIncome, y = Rate, size = Population)) +
+ggplot(df, aes(y = PercentTotalIncome, x = Rate, size = Population)) +
   geom_point() +
   theme_classic() +
-  labs(x = "Yearly Opioid Overdose Deaths per 100,000 People",
-       y = "Government Transfers as Percent of Total Income",
+  labs(y = "Yearly Opioid Overdose Deaths per 100,000 People",
+       x = "Government Transfers as Percent of Total Income",
        size = "County Population") +
-  ggtitle("The Relationship Between Government Transfers and Opioid Overdoses")
+  ggtitle("Government Transfers and Opioid Overdose Rate")
 ```
+
+This graph does not appear to show anything meaninful
