@@ -39,13 +39,18 @@ df <- df %>%
 # Transfer Receipts and Opioid Overdoses in Ohio
 
 ```{r}
-ggplot(df, aes(y = PercentTotalIncome, x = Rate, size = Population)) +
+ggplot(df, aes(x = PercentTotalIncome, y = Rate, size = Population)) +
   geom_point() +
   theme_classic() +
   labs(y = "Yearly Opioid Overdose Deaths per 100,000 People",
        x = "Government Transfers as Percent of Total Income",
        size = "County Population") +
-  ggtitle("Government Transfers and Opioid Overdose Rate")
+  ggtitle("Government Transfers and Opioid Overdose Deaths")
 ```
 
 This graph does not appear to show anything meaninful
+
+```{r}
+ggplot(df, aes(x = DependencyRank, y = Rate)) +
+  geom_jitter()
+```
