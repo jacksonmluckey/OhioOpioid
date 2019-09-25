@@ -79,10 +79,10 @@ ExtractPoorDemographicsTable("PoorFamilies.csv", 2)
 Page1 <- raw_tables[[4]]
 Page2 <- raw_tables[[5]]
 Page3 <- raw_tables[[6]]
-# Names of the variables excluding "Area"
-col_names <- c("N", "NumPoor", "PercentPoor")
 # Functiont that takes a dataframe (1 page of the table) and returns a tidy table
 ExtractNumPercentPoorCountyTable <- function(df) {
+  # Turn df into a tibble
+  df <- as_tibble(df)
   # Remove pointless rows at the top
   df <- df[7:nrow(df),]
   # Remove empty columns
@@ -92,17 +92,20 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   df1 <- df[,2:3]
   df2 <- df[,4:5]
   df3 <- df[,6:7]
-  # Function for splitting the N/NumPoor column and appending the area
-  SplitNumPoorN_AddArea <- function(df, area) {
+  # Function for splitting the N/NumPoor column, appending the area, and fixing the col names
+  SplitNumPoorN_AddArea_FixNames <- function(df, area) {
+    # Names of the variables
+    col_names <- c("N", "NumPoor", "PercentPoor", "Area")
     df <- df %>%
-      seperate(1, c("N", "NumPoor"), sep = " ")
+      separate(1, c("N", "NumPoor"), sep = " ")
     df <- bind_cols(df, area)
+    names(df) <- col_names
     return(df)
   }
   # Actually split the N/NumPoor column and add the area
-  df1 <- SplitNumPoorN_AddArea(df1, area)
-  df2 <- SplitNumPoorN_AddArea(df2, area)
-  df3 <- SplitNumPoorN_AddArea(df3, area)
+  df1 <- SplitNumPoorN_AddArea_FixNames(df1, area)
+  df2 <- SplitNumPoorN_AddArea_FixNames(df2, area)
+  df3 <- SplitNumPoorN_AddArea_FixNames(df3, area)
   # Add year column to each df (done manually because I am bad)
   # I averaged out the split years (e.g. 2007-2011 becomes 2009)
   df1$year <- 2015
