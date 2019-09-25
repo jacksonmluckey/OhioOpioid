@@ -123,3 +123,9 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   df <- df %>%
     mutate(Area = str_replace(Area, fixed("*"), ""))
 }
+# Apply the function
+Page1 <- ExtractNumPercentPoorCountyTable(Page1)
+Page2 <- ExtractNumPercentPoorCountyTable(Page2)
+Page3 <- ExtractNumPercentPoorCountyTable(Page3)
+# Combine the pages
+NumPercentPoorCounty <- bind_rows(Page1, Page2, Page3)
