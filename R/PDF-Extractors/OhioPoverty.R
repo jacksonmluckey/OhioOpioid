@@ -86,26 +86,28 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   # Remove pointless rows at the top
   df <- df[7:nrow(df),]
   # Remove empty columns
-  df[,5] <- NULL
-  df[,8] <- NULL
+  df <- df[-c(5,8)]
   # Seperate the dataframe into small dataframes to prepare for reshaping/tidying
   area <- df[,1]
   df1 <- df[,2:3]
   df2 <- df[,4:5]
   df3 <- df[,6:7]
-  # Function for splitting the N/NumPoor column
-  SplitNumPoorN <- function(df) {
+  # Function for splitting the N/NumPoor column and appending the area
+  SplitNumPoorN_AddArea <- function(df, area) {
     df <- df %>%
       seperate(1, c("N", "NumPoor"), sep = " ")
+    df <- bind_cols(df, area)
     return(df)
   }
-  # Actually split the N/NumPoor column
-  df1 <- SplitNumPoorN(df1)
-  df2 <- SplitNumPoorN(df2)
-  df3 <- SplitNumPoorN(df3)
+  # Actually split the N/NumPoor column and add the area
+  df1 <- SplitNumPoorN_AddArea(df1, area)
+  df2 <- SplitNumPoorN_AddArea(df2, area)
+  df3 <- SplitNumPoorN_AddArea(df3, area)
   # Add year column to each df (done manually because I am bad)
-  
+  # I averaged out the split years (e.g. 2007-2011 becomes 2009)
+  df1$year <- 2015
+  df2$year <- 2009
+  df3$year <- 1999
   # Combine the rows
   df <- bind_rows(df1, df2, df3)
-  # Merge with area
 }
