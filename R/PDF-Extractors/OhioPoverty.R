@@ -113,4 +113,7 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   df3$year <- 1999
   # Combine the rows
   df <- bind_rows(df1, df2, df3)
+  # Mutate numericals to, well, numericals
+  df <- df %>%
+    mutate_at(c("N", "NumPoor", "PercentPoor"), parse_number)
 }
