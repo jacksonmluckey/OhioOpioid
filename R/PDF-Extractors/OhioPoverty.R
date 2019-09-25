@@ -108,12 +108,15 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   df3 <- SplitNumPoorN_AddArea_FixNames(df3, area)
   # Add year column to each df (done manually because I am bad)
   # I averaged out the split years (e.g. 2007-2011 becomes 2009)
-  df1$year <- 2015
-  df2$year <- 2009
-  df3$year <- 1999
+  df1$Year <- 2015
+  df2$Year <- 2009
+  df3$Year <- 1999
   # Combine the rows
   df <- bind_rows(df1, df2, df3)
   # Mutate numericals to, well, numericals
   df <- df %>%
     mutate_at(c("N", "NumPoor", "PercentPoor"), parse_number)
+  # Remove asterisk from Area column
+  df <- df %>%
+    mutate(Area = str_replace(Area, fixed("*"), ""))
 }
