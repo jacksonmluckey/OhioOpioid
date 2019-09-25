@@ -79,3 +79,21 @@ ExtractPoorDemographicsTable("PoorFamilies.csv", 2)
 Page1 <- raw_tables[[4]]
 Page2 <- raw_tables[[5]]
 Page3 <- raw_tables[[6]]
+# Names of the variables excluding "Area"
+col_names <- c("N", "NumPoor", "PercentPoor")
+# Functiont that takes a dataframe (1 page of the table) and returns a tidy table
+ExtractNumPercentPoorCountyTable <- function(df) {
+  # Remove empty columns
+  df[,5] <- NULL
+  df[,8] <- NULL
+  # Seperate the dataframe into small dataframes to prepare for reshaping/tidying
+  area <- df[,1]
+  df1 <- df[,2:3]
+  df2 <- df[,4:5]
+  df3 <- df[,6:7]
+  # Split the N/NumPoor column
+  SplitNumPoorN <- function(df) {
+    df <- df %>%
+      s
+  }
+}
