@@ -116,6 +116,9 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   # Mutate numericals to, well, numericals
   df <- df %>%
     mutate_at(c("N", "NumPoor", "PercentPoor"), parse_number)
+  # Create Appalachian boolean from Area asterisk
+  df <- df %>%
+    mutate(Appalachian = str_detect(Area, fixed("*")))
   # Remove asterisk from Area column
   df <- df %>%
     mutate(Area = str_replace(Area, fixed("*"), ""))
