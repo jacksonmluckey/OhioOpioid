@@ -129,3 +129,9 @@ Page2 <- ExtractNumPercentPoorCountyTable(Page2)
 Page3 <- ExtractNumPercentPoorCountyTable(Page3)
 # Combine the pages
 NumPercentPoorCounty <- bind_rows(Page1, Page2, Page3)
+# Clean up the environment (see if this is enough)
+rm(Page1)
+rm(Page2)
+rm(Page3)
+# Save to CSV
+write_csv(NumPercentPoorCounty, path = here("Data", "CSV", "NumPercentPoorCounty.csv"))
