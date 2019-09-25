@@ -83,6 +83,8 @@ Page3 <- raw_tables[[6]]
 col_names <- c("N", "NumPoor", "PercentPoor")
 # Functiont that takes a dataframe (1 page of the table) and returns a tidy table
 ExtractNumPercentPoorCountyTable <- function(df) {
+  # Remove pointless rows at the top
+  df <- df[7:nrow(df),]
   # Remove empty columns
   df[,5] <- NULL
   df[,8] <- NULL
@@ -91,9 +93,19 @@ ExtractNumPercentPoorCountyTable <- function(df) {
   df1 <- df[,2:3]
   df2 <- df[,4:5]
   df3 <- df[,6:7]
-  # Split the N/NumPoor column
+  # Function for splitting the N/NumPoor column
   SplitNumPoorN <- function(df) {
     df <- df %>%
-      s
+      seperate(1, c("N", "NumPoor"), sep = " ")
+    return(df)
   }
+  # Actually split the N/NumPoor column
+  df1 <- SplitNumPoorN(df1)
+  df2 <- SplitNumPoorN(df2)
+  df3 <- SplitNumPoorN(df3)
+  # Add year column to each df (done manually because I am bad)
+  
+  # Combine the rows
+  df <- bind_rows(df1, df2, df3)
+  # Merge with area
 }
