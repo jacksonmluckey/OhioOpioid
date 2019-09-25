@@ -67,3 +67,12 @@ ExtractPoorDemographicsTable <- function(FileName, TableNumber) {
 # Actually run the function
 ExtractPoorDemographicsTable("PoorPersons.csv", 1)
 ExtractPoorDemographicsTable("PoorFamilies.csv", 2)
+
+
+###########################################################################################
+# Table Table A4: Number and Percentage of Poor Persons by Ohio County for Selected Years #
+# Pages 61-63 of PDF (page numbers 55-57)                                                 #
+###########################################################################################
+Page1 <- raw_tables[[4]]
+Page2 <- raw_tables[[5]]
+Page3 <- raw_tables[[6]]
