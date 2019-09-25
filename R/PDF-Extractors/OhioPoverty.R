@@ -13,6 +13,8 @@ raw_tables <- extract_tables(pdf_path, pages = 58:95)
 # Function that extracts:                                                                                                    #
 # Table A1: Number and Percent of Poor Persons in Ohio and the U.S., 1959, 1969-2017 (in Thousands, Except for Percentages)  #
 # Table A2: Number and Percent of Poor Families in Ohio and the U.S., 1959, 1969-2017 (in Thousands, Except for Percentages) #
+# Pages 58 and 59 of PDF
+# Pages 52 and 53 of documentS
 ##############################################################################################################################
 ExtractPoorDemographicsTable <- function(FileName, TableNumber) {
   PoorUnits <- as.tibble(raw_tables[[2]])
@@ -71,7 +73,8 @@ ExtractPoorDemographicsTable("PoorFamilies.csv", 2)
 
 ###########################################################################################
 # Table Table A4: Number and Percentage of Poor Persons by Ohio County for Selected Years #
-# Pages 61-63 of PDF (page numbers 55-57)                                                 #
+# Pages 61-63 of PDF
+# Pages 55-57 of document                                                 #
 ###########################################################################################
 Page1 <- raw_tables[[4]]
 Page2 <- raw_tables[[5]]
