@@ -72,7 +72,8 @@ for (year in years) {
 ```
 
 ```{r death_data, echo=FALSE}
-deaths <- read_csv(here("Data", "CSV", "OverdoseDeathsTall.csv"))
+deaths <- read_csv(here("Data", "CSV", "OverdoseDeathsTall.csv")) %>%
+  rename(county = County)
 df <- left_join(df, deaths)
 ```
 
@@ -87,11 +88,23 @@ geom <- get_acs("county",
                 state = "OH",
                 variables = "S1810_C01_001",
                 geometry = TRUE,
-                survey = "acs1")
+                survey = "acs1") %>%
+  clean_tidycensus_table()
 ```
 
 ```{r test_map, echo=FALSE}
-ggplot(geom, aes(fill = estimate)) +
+test <- left_join(deaths, geom) %>%
+  filter(!is.na(estimate)) %>%
+  mutate(rateOD = (deaths / estimate) * 10000) %>%
+  filter(year != 2005) # to make a nice 3x4
+
+ggplot(test, aes(fill = rateOD, geometry = geometry)) +
   geom_sf() +
-  scale_fill_viridis_c()
+  facet_wrap(vars(year)) +
+  scale_fill_viridis_c() +
+  theme_minimal() +
+  theme(axis.text = element_blank(),
+        line = element_blank()) +
+  ggtitle("Annual Opioid Overdose Deaths per 10,000 People in Ohio") +
+  labs(fill = "Overdose Deaths")
 ```
