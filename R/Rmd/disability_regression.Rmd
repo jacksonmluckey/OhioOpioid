@@ -108,3 +108,14 @@ ggplot(test, aes(fill = rateOD, geometry = geometry)) +
   ggtitle("Annual Opioid Overdose Deaths per 10,000 People in Ohio") +
   labs(fill = "Overdose Deaths")
 ```
+
+```{r}
+ggplot(df, aes(x = estimate_S1810_C01_001, y = deaths)) +
+  geom_jitter() +
+  scale_y_log10() +
+  scale_x_log10() +
+  geom_smooth(method = "lm") +
+  theme_minimal() +
+  labs(x = "Population", y = "Opioid Overdose Deaths") +
+  ggtitle("OD Deaths and County Population")
+```
