@@ -81,3 +81,9 @@ vars <- load_variables(2010, "acs1/subject", cache = TRUE) %>%
   mutate(keep = stringr::str_detect(name, "S1810")) %>%
   filter(keep == TRUE)
 ```
+
+```{r geom, echo=FALSE}
+geom <- get_acs("county",
+                variables = "S1810_C01_001",
+                geometry = TRUE
+                survey = "acs1")
