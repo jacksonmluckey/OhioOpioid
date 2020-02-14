@@ -1,0 +1,70 @@
+---
+title: "Disability Overdose Death"
+author: "Jackson M Luckey"
+date: "2/14/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tidycensus)
+library(janitor)
+```
+
+```{r census_functions, echo=FALSE}
+# removes " County, Ohio" from county column (because it's the same in all cases)
+clean_county_col<- function(df) {
+
+  df <- df %>%
+    mutate(county = str_remove(county, " County, Ohio"))
+
+}
+
+clean_tidycensus_table <- function(df) {
+
+  # rename the "NAME" column to county
+  df <- df %>%
+    rename(county = NAME)
+
+  df <- clean_county_col(df)
+
+}
+
+get_acs_tidycensus_table <- function(table, year, survey = "acs1") {
+
+  df <- get_acs("county",
+                state = "OH",
+                year = year,
+                table = table,
+                survey = survey,
+                cache = TRUE)
+
+  df$table <- table
+
+  df <- clean_tidycensus_table(df)
+
+}
+
+make_census_table_wide <- function(df) {
+
+  df <- df %>%
+    pivot_longer(cols = c(estimate, moe)) %>%
+    pivot_wider(names_from = c(name, variable), values_from = value)
+
+}
+```
+
+```{r disability_data, echo=FALSE}
+years <- 2010:2018
+for (year in years) {
+  tmp <- get_acs_tidycensus_table("S1810", year, "acs1") %>%
+    make_census_table_wide()
+  tmp$year <- year
+  if (year == 2010) {
+    df <- tmp
+  } else {
+    df <- bind_rows(tmp, df)
+  }
+}
+```
