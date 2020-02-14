@@ -84,6 +84,14 @@ vars <- load_variables(2010, "acs1/subject", cache = TRUE) %>%
 
 ```{r geom, echo=FALSE}
 geom <- get_acs("county",
+                state = "OH",
                 variables = "S1810_C01_001",
-                geometry = TRUE
+                geometry = TRUE,
                 survey = "acs1")
+```
+
+```{r test_map, echo=FALSE}
+ggplot(geom, aes(fill = estimate)) +
+  geom_sf() +
+  scale_fill_viridis_c()
+```
