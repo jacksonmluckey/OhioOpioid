@@ -57,6 +57,7 @@ make_census_table_wide <- function(df) {
 ```
 
 ```{r disability_data, echo=FALSE}
+# load the census data
 years <- 2010:2018
 for (year in years) {
   tmp <- get_acs_tidycensus_table("S1810", year, "acs1") %>%
@@ -73,4 +74,10 @@ for (year in years) {
 ```{r death_data, echo=FALSE}
 deaths <- read_csv(here("Data", "CSV", "OverdoseDeathsTall.csv"))
 df <- left_join(df, deaths)
+```
+
+```{r disability_var_labels, echo=FALSE}
+vars <- load_variables(2010, "acs1/subject", cache = TRUE) %>%
+  mutate(keep = stringr::str_detect(name, "S1810")) %>%
+  filter(keep == TRUE)
 ```
