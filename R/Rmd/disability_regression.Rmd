@@ -6,7 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 library(tidycensus)
 library(janitor)
@@ -109,7 +109,11 @@ ggplot(test, aes(fill = rateOD, geometry = geometry)) +
   labs(fill = "Overdose Deaths")
 ```
 
-```{r}
+```{r population_demo}
+# used to add r-squared to plot below
+rsq_pop_od_deaths <- lm(deaths ~ estimate_S1810_C01_001, df)
+
+# relationship between county population and OD rate
 ggplot(df, aes(x = estimate_S1810_C01_001, y = deaths)) +
   geom_jitter() +
   scale_y_log10() +
@@ -117,5 +121,15 @@ ggplot(df, aes(x = estimate_S1810_C01_001, y = deaths)) +
   geom_smooth(method = "lm") +
   theme_minimal() +
   labs(x = "Population", y = "Opioid Overdose Deaths") +
-  ggtitle("OD Deaths and County Population")
+  ggtitle("OD Deaths and County Population") +
+  annotate("text",
+           y = c(30, 22),
+           x = 1000000,
+           label = c("R-Squared: ", summary(rsq_pop_od_deaths)$r.squared)) # I had to idea a period was a valid character for a variable name
+```
+
+```{r}
+#013 is 13-34 not disabled -> should it be a percentage?
+test <- lm(deaths ~ estimate_S1810_C01_001 + estimate_S1810_C01_013, df)
+test
 ```
