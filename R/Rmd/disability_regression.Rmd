@@ -69,6 +69,8 @@ for (year in years) {
     df <- bind_rows(tmp, df)
   }
 }
+# save a backup in case I need to go back
+backup_df <- df
 ```
 
 ```{r death_data, echo=FALSE}
@@ -138,8 +140,14 @@ test
 # expand as I select variables to use in final analysis
 df <- df %>%
   rename(
-    "total_population_est" = "estimate_S1810_C01_001",
-    "total_population_moe" = "moe_S1810_C01_001",
-    "age18to34_no_disability_est" = "estimate_S1810_C01_013"
+    "population_total" = "estimate_S1810_C01_001",
+    "population_total_moe" = "moe_S1810_C01_001",
+    "disability_no_age18to34" = "estimate_S1810_C01_013",
+    "population_age18to34" = "estimate_S1810_C01_010", # not population?
   )
+```
+
+```{r make_new_vars_disability}
+df <- df %>%
+  mutate(disability_perc_age18to34 = (population_age18to34 - disability_no_age18to34))
 ```
