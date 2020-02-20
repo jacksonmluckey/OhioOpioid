@@ -1,0 +1,30 @@
+---
+title: 'tidycensus try #3'
+author: "Jackson M Luckey"
+date: "2/20/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(tidycensus)
+```
+
+```{r census_variables}
+# B19037 is household income by age of householder
+household_income_age_var_labels <- vars %>%
+  filter(stringr::str_detect(name, "B19037_")) %>%
+  rename(variable = name)
+household_income_age_df <- get_acs("county",
+                                   year = 2018,
+                                   table = "B19037",
+                                   state = "OH")
+df <- left_join(household_income_age_df, household_income_age_var_labels)
+```
+
+```{r add_death_data, echo=FALSE}
+deaths <- read_csv(here("Data", "CSV", "OverdoseDeathsTall.csv")) %>%
+  rename(county = County)
+df <- left_join(df, deaths)
+```
